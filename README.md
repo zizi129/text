@@ -2,7 +2,6 @@
 
 > **TL;DR**：一个将 **YOLO 实时目标检测**、**单目深度估计** 与 **MNN 端侧 LLM + 中文 TTS** 整合到 **同一个 Android App** 的示例工程，支持离线运行，专注“看见→理解→播报”的闭环。在本仓库中：业务代码位于 `app/`，中文 TTS 作为独立模块位于 `chinesettsmodule/`，模型与本地库请按本文目录说明放置。
 
----
 
 ## 仓库状态
 
@@ -10,8 +9,6 @@
 * 主要模块：`app/`、`chinesettsmodule/`
 * 版本发布：在 **Releases** 中提供模型压缩包（见右栏 *Releases*），可直接下载后解压到 `assets/models/` 对应目录。
 
-
----
 
 ## 目录结构
 
@@ -34,7 +31,6 @@
 ```
 
 
----
 
 ## 系统架构与数据流
 
@@ -61,7 +57,6 @@ graph LR
 
 
 
----
 
 ## 环境要求
 
@@ -131,7 +126,6 @@ android {
 
 > 若出现“重复 .so”冲突，优先保留 `app/src/main/jniLibs/arm64-v8a/` 的版本，删除根目录 `lib/arm64-v8a/` 的冗余文件或在 `packagingOptions` 中排除。
 
----
 
 ## 模型与资源放置
 
@@ -196,7 +190,6 @@ app/src/main/jniLibs/arm64-v8a/
   * LLM Busy 行为（合并/覆盖/排队）
 * LLM 输出采用 **非流式**，返回后统一触发 TTS 播报。
 
----
 
 ## 检测后处理与播报策略
 
@@ -229,7 +222,6 @@ app/src/main/jniLibs/arm64-v8a/
 * 通过音频焦点减少与系统/他应用冲突；
   
 
----
 
 ## 性能与调参建议
 
@@ -238,7 +230,6 @@ app/src/main/jniLibs/arm64-v8a/
 * **量化**：LLM `q8` 主干 + `lm 16bit` 头是较稳方案；
 * **线程与拷贝**：尽量减少 OES→CPU 读回；推理与 TTS 分线程并使用门控
 
----
 
 ## 常见问题（FAQ）
 
@@ -269,7 +260,6 @@ MNN 版本或转换工具不匹配，确保转换器与运行时版本一致，�
 **Q9. 不同光线环境下检测效果差异大？**  
 可在代码中添加“自动曝光调节”（通过Camera2 API设置），或在 `DetResultReporter` 中增加光线补偿逻辑。
 
----
 
 ## Roadmap
 
@@ -280,7 +270,6 @@ MNN 版本或转换工具不匹配，确保转换器与运行时版本一致，�
 * [ ] DepthAnything 直接距离标定工具
 * [ ] 更丰富的可达性/安全级别提示词模板
 
----
 
 ## 致谢
 
@@ -289,7 +278,6 @@ MNN 版本或转换工具不匹配，确保转换器与运行时版本一致，�
 * [YOLO-Depth-Estimation-for-Android by @DakeQQ](https://github.com/DakeQQ/YOLO-Depth-Estimation-for-Android)
 * 以及所有开源依赖的作者与贡献者 🙏
 
----
 
 ## 联系与贡献
 
@@ -306,7 +294,6 @@ MNN 版本或转换工具不匹配，确保转换器与运行时版本一致，�
 - 新增功能包含简单的单元测试；  
 - 更新README中相关的配置或说明。
 
----
 
 ## License
 
