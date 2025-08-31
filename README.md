@@ -1,5 +1,5 @@
 # blind guide on Android
-1
+
 > **TL;DR**：一个将 **YOLO 实时目标检测**、**单目深度估计** 与 **MNN 端侧 LLM + 中文 TTS** 整合到 **同一个 Android App** 的示例工程，支持离线运行，专注“看见→理解→播报”的闭环。在本仓库中：业务代码位于 `app/`，中文 TTS 作为独立模块位于 `chinesettsmodule/`，模型与本地库请按本文目录说明放置。
 
 ---
@@ -257,6 +257,18 @@ MNN 版本或转换工具不匹配，确保转换器与运行时版本一致，�
 **Q5. 推理过程中闪退？**
 将tokenizer.txt换为LF格式。
 
+**Q6. 相机预览黑屏或闪退？**
+确保设备相机功能正常，且App已获取“相机权限”；若使用Android 13+，需在Manifest中声明 `android.permission.CAMERA` 并动态申请。
+
+**Q7. 语音播报无声音？**
+检查设备音量（尤其是媒体音量），确认App已获取“麦克风权限”（TTS可能依赖音频输出权限）；尝试重启App或设备。
+
+**Q8. 模型解压后体积过大，导致APK安装失败？**
+可采用“分包下载”策略：将模型放在服务器，App首次启动时下载并解压到 `getExternalFilesDir()` 目录，避免APK体积超限。
+
+**Q9. 不同光线环境下检测效果差异大？**  
+可在代码中添加“自动曝光调节”（通过Camera2 API设置），或在 `DetResultReporter` 中增加光线补偿逻辑。
+
 ---
 
 ## Roadmap
@@ -276,6 +288,23 @@ MNN 版本或转换工具不匹配，确保转换器与运行时版本一致，�
 * [ChineseTtsTflite by @benjaminwan](https://github.com/benjaminwan/ChineseTtsTflite)
 * [YOLO-Depth-Estimation-for-Android by @DakeQQ](https://github.com/DakeQQ/YOLO-Depth-Estimation-for-Android)
 * 以及所有开源依赖的作者与贡献者 🙏
+
+---
+
+## 联系与贡献
+
+欢迎通过以下方式参与项目改进：  
+1. **提交Issue**：报告bug、提出功能建议（请注明设备型号、Android版本及复现步骤）；  
+2. **提交PR**：  
+   - 优化检测/深度估计的精度或速度；  
+   - 扩展TTS的语音风格；  
+   - 适配更多机型；  
+3. **模型优化**：提供更小、更快的模型（需兼容MNN格式）。
+
+提交PR前请确保：  
+- 代码风格与现有项目一致（Java/Kotlin遵循Google编码规范）；  
+- 新增功能包含简单的单元测试；  
+- 更新README中相关的配置或说明。
 
 ---
 
